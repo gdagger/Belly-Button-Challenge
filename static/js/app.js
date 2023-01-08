@@ -72,32 +72,46 @@ function createCharts(sampleID = defaultID) {
     // Store washing frequency value
     let wfreq = metadata.wfreq;
 
+    // 
     let gaugeData = [
       {
-        domain: { x: [0, 1], y: [0, 1] },
+        domain: {
+          x: [0, 1], y: [0, 1]
+        },
         value: wfreq,
-        title: { text: "Speed" },
+        title: { 
+          text: "Belly Button Washing Frequency <br><sup>Scrubs per Week</sup>"
+        },
         type: "indicator",
-        mode: "gauge+number",
-        delta: { reference: 380 },
+        mode: "number+gauge",
+        // delta: { reference: 380 },
         gauge: {
-          axis: { range: [null, 9] },
+          axis: { 
+            range: [null, 9],
+            visible: true,
+            tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          },
+          bar: {
+            color: "gray"
+          },
           steps: [
-            { range: [0, 1], color: "red" },
-            { range: [1, 2], color: "orange" },
-            { range: [2, 3], color: "yellow" },
-            { range: [3, 4], color: "green" },
-            { range: [4, 5], color: "blue" },
-            { range: [5, 6], color: "purple" },
-            { range: [6, 7], color: "pink" },
-            { range: [7, 8], color: "gray" },
-            { range: [8, 9], color: "black" }
+            { range: [0, 1], color: 'rgb(230, 232, 233)'},
+            { range: [1, 2], color: 'rgb(204, 215, 221)'},
+            { range: [2, 3], color: 'rgb(178, 198, 210)'},
+            { range: [3, 4], color: 'rgb(153, 181, 199)'},
+            { range: [4, 5], color: 'rgb(129, 165, 189)'},
+            { range: [5, 6], color: 'rgb(104, 148, 179)'},
+            { range: [6, 7], color: 'rgb(79, 131, 169)'},
+            { range: [7, 8], color: 'rgb(52, 115, 159)'},
+            { range: [8, 9], color: 'rgb(6, 99, 149)'}
           ]
         }
       }
     ];
 
-    let gaugeLayout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+    let gaugeLayout = { 
+      width: 600, height: 500, margin: { t: 0, b: 0 } 
+    };
     Plotly.newPlot('gauge', gaugeData, gaugeLayout);
 
   });
