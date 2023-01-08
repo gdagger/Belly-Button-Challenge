@@ -18,7 +18,6 @@ function createCharts(sampleID = defaultID) {
     // Store otu_labels array for current sample ID
     let otu_labels = sampleData.otu_labels;
 
-
     /// BAR CHART
     let barData = [{
       // Set x values equal to top ten sample values and reverse them so highest value is at top of bar chart
@@ -66,8 +65,42 @@ function createCharts(sampleID = defaultID) {
     };
     // Create bubble chart in the "bubble" div
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
-  });
 
+    /// BONUS 
+    // Pull metadata for current sample ID
+    let metadata = data.metadata.filter(item => parseInt(item.id) === parseInt(sampleID))[0];
+    // Store washing frequency value
+    let wfreq = metadata.wfreq;
+
+    let gaugeData = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: wfreq,
+        title: { text: "Speed" },
+        type: "indicator",
+        mode: "gauge+number",
+        delta: { reference: 380 },
+        gauge: {
+          axis: { range: [null, 9] },
+          steps: [
+            { range: [0, 1], color: "red" },
+            { range: [1, 2], color: "orange" },
+            { range: [2, 3], color: "yellow" },
+            { range: [3, 4], color: "green" },
+            { range: [4, 5], color: "blue" },
+            { range: [5, 6], color: "purple" },
+            { range: [6, 7], color: "pink" },
+            { range: [7, 8], color: "gray" },
+            { range: [8, 9], color: "black" }
+          ]
+        }
+      }
+    ];
+
+    let gaugeLayout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+    Plotly.newPlot('gauge', gaugeData, gaugeLayout);
+
+  });
 }
 
 
