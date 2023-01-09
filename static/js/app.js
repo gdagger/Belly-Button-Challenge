@@ -29,10 +29,19 @@ function createCharts(sampleID = defaultID) {
       orientation: 'h',
       // Set text equal to top ten otu_labels
       text: otu_labels.slice(0,10).reverse()
-    }]
+    }];
+
+    let barLayout = {
+      width: 500,
+      height: 400,
+      margin: {
+        t: 0,
+        b: 0
+      }
+    };
 
     // Create bar chart in the "bar" div
-    Plotly.newPlot("bar", barData);
+    Plotly.newPlot("bar", barData, barLayout);
 
     /// BUBBLE CHART
     let bubbleData = [{
@@ -65,6 +74,9 @@ function createCharts(sampleID = defaultID) {
         title: {
           text: 'OTU ID',
           }
+      },
+      margin: {
+        t:0
       }
     };
 
@@ -115,7 +127,9 @@ function createCharts(sampleID = defaultID) {
     ];
 
     let gaugeLayout = { 
-      width: 600, height: 500, margin: { t: 0, b: 0 } 
+      width: 600, 
+      height: 500, 
+      margin: {t: 0, b: 0} 
     };
     Plotly.newPlot('gauge', gaugeData, gaugeLayout);
 

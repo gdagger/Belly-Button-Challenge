@@ -7,17 +7,19 @@
 
 For this assignment, I used my knowledge of Javascript, HTML, and the D3 library to build an interactive dashboard that explores the [Belly Button Biodiversity dataset](./samples.json). 
 
-All code is included in the [app.js](./static/js/app.js) file, located in the static/js subdirectory of the main repository.
+The main Javascript code is contained in the [app.js](./static/js/app.js) file, located in the static/js subdirectory of the main repository. 
+
+The dashboard is live on [Github Pages](https://gdagger.github.io/Belly-Button-Challenge/).
 <hr>
 
-## Project Overview
+# Project Overview
 
-The most challenging part of this assignment was determining the overall flow and order of functionality in the code. One of the major breakthroughs in this process was determining that the API calls through D3 had to either be made separately within each function or include all functions within a single ".then" call to the API. I ultimately decided to break the tasks up into four functions, with separate D3 API calls contained in each.
+The most challenging part of this assignment was determining the overall flow and order of functionality in the code. One of the major breakthroughs in this process was determining that the API calls through D3 had to either be made separately within each function or include all functions within a single ".then" call to the API. I ultimately decided to break the tasks up between four functions, with separate D3 API calls contained within each of them.
 
 <hr>
 
-# Function 1: createCharts
-This function was my starting point for building the dashboard. The createCharts function takes in a single sampleID string as its only argument with a default value. I initialized the default value at the beginning of the code as a variable called *defaultID* set to '940'. Using a variable here makes it easier to update this default value in the future by simply changing its value in the first line.
+## Function 1: createCharts
+This function was my starting point for building the dashboard. The createCharts function takes in a single sampleID string as its only argument with a default value. I initialized the default value at the beginning of the code as a variable called *defaultID* set to '940'. This makes it much easier to update the default value in the future by simply changing its value once in the first line of code.
 
 The function then extracts the data for that sample from the API using the D3 library and stores the necessary data in variables (*samples*, *sampleData*, *otu_ids*, *sample_values*, and *otu_labels*.)
 
@@ -35,7 +37,7 @@ The bubble chart displays all OTU data for the selected individual. It uses *otu
 
 <br>
 
-For the additional bonus, I added the gauge chart that plots the weekly washing frequency of the selected individual. I had difficulty figuring out how to add this to a separate "bonus.js" file due to the way I structured my code, particularly since the "optionChanged" function was already defined in the main file. I found it more straightforward to include it in the original "createCharts" function. 
+For the additional bonus, I added the gauge chart that plots the weekly washing frequency of the selected individual. I had difficulty figuring out how to add this to a separate "bonus.js" file due to the way I organized my code, particularly since the "optionChanged" function was already defined in the main file. I found it more straightforward to include it in the original "createCharts" function. 
 I created a version that shows the *wfreq* value for the selected individual on the indicator. Since all of these values appeared to be integers, I felt it made more sense to label each "step" on the gauge by discrete integer values rather than the fairly ambiguous ranges depicted in the image. 
 On its own, this function correctly creates the charts when a sample ID is entered as an argument, but at this point is not connected to the dropdown menu or selection and must be changed within the app.js file itself.
 
