@@ -28,12 +28,11 @@ function createCharts(sampleID = defaultID) {
       type: "bar",
       orientation: 'h',
       // Set text equal to top ten otu_labels
-      text: otu_labels.slice(0,10).reverse(),
+      text: otu_labels.slice(0,10).reverse()
     }]
 
     // Create bar chart in the "bar" div
     Plotly.newPlot("bar", barData);
-
 
     /// BUBBLE CHART
     let bubbleData = [{
@@ -43,13 +42,18 @@ function createCharts(sampleID = defaultID) {
       y: sample_values,
       // Set hover text to corresponding otu_labels
       text: otu_labels,
+  
       // Set to bubble chart with marker color based on otu_id and marker size based on sample_values
       mode: 'markers',
+
       marker: {
         color: otu_ids,
+        colorscale: "Earth",
         size: sample_values
       }
     }];
+
+    
     
     // Customize bubble chart layout
     let bubbleLayout = {
@@ -63,10 +67,11 @@ function createCharts(sampleID = defaultID) {
           }
       }
     };
+
     // Create bubble chart in the "bubble" div
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
-    /// BONUS 
+    /// BONUS: GAUGE CHART
     // Pull metadata for current sample ID
     let metadata = data.metadata.filter(item => parseInt(item.id) === parseInt(sampleID))[0];
     // Store washing frequency value
@@ -125,7 +130,7 @@ function getMetadata(sampleID = defaultID) {
     // Store metadata for current sampleID
     let metadata = data.metadata.filter(item => parseInt(item.id) === parseInt(sampleID))[0];
 
-    // Create separate lists for keys and values of demographic data
+    // Create separate arrays for keys and values of demographic data
     let metadataKeys = Object.keys(metadata);
     let metadataValues = Object.values(metadata);
 
@@ -150,6 +155,24 @@ function getMetadata(sampleID = defaultID) {
   });
 }
 
+///// Create function to initialize dashboard and create dropdown menu
+function createDropdownMenu() {
+  // Use D3 to extract data from API
+  d3.json(url).then(data => {
+    // Store sample ID names as array
+    names = data.names;
+    // Loop through sample data to add sample IDs to dropdown menu
+    for (i=0; i<names.length; i++) {
+      // Select the dropdown menu element using D3
+      let dropDownMenu = d3.select("#selDataset");
+      // Add new "option" element for every sample in dataset
+      let newOption = dropDownMenu.append("option");
+      // Set text in each option to the sample ID
+      newOption.text(names[i]);
+    }
+  })
+};
+
 ///// Create function to update page based on changes in dropdown menu
 function optionChanged(sampleID = defaultID) {
   // Update charts to data for selected sample ID
@@ -157,24 +180,6 @@ function optionChanged(sampleID = defaultID) {
   // Updata demographic info panel for selected sample ID
   getMetadata(sampleID);
 }
-
-///// Create function to initialize dashboard and create dropdown menu
-function createDropdownMenu() {
-  // Use D3 to extract data from API
-  d3.json(url).then(data => {
-    // Store sample data for all samples
-    samplesData = data.samples;
-    // Loop through sample data to add sample IDs to dropdown menu
-    for (i=0; i<samplesData.length; i++) {
-      // Select the dropdown menu element using D3
-      let dropDownMenu = d3.select("#selDataset");
-      // Add new "option" element for every sample in dataset
-      let newOption = dropDownMenu.append("option");
-      // Set text in each option to the sample ID
-      newOption.text(samplesData[i].id);
-    }
-  })
-};
 
 
 ///// EXECUTING FUNCTIONALITY
