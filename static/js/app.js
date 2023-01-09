@@ -32,10 +32,10 @@ function createCharts(sampleID = defaultID) {
     }];
 
     let barLayout = {
-      width: 500,
-      height: 400,
+      width: 450,
+      height: 350,
       margin: {
-        t: 0,
+        t: 30,
         b: 0
       }
     };
@@ -62,8 +62,6 @@ function createCharts(sampleID = defaultID) {
       }
     }];
 
-    
-    
     // Customize bubble chart layout
     let bubbleLayout = {
       // Adjust size of chart
